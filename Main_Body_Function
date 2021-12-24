@@ -1,0 +1,50 @@
+function sendEmails() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Monitoring Sheet");
+  var lr = ss.getLastRow();
+  var range = ss.getRange("H2:H"+lr).getValues();
+  var data = ss.getRange("F2:F"+lr).getValues();
+  var arp = ss.getRange("H2:H"+lr)
+  var list = sheet_to_dict();
+  var ext = list["Extension"];
+  var email = list["Email"];
+  var monitor = monitor_to_dict();
+  var caller = monitor["Person Calling"];
+  var notes = monitor["Notes"];
+  var employee = list["First Name"]
+  var match = monitor["Extension Transferred To?"]
+  for ( i in range) {
+    for ( b in range[i]) {
+      var test = range[i][b]
+      if (test == false) {
+	      var c1 = email[i];
+   	    var row = ext[i];
+        for (c in match) {
+          var hold = match[c]
+          if (row == hold && row !== "") {
+              var emailAddress = email[c];
+              var per = caller[i];
+    	        var note = notes[i];
+              var body = "Hello " + employee[i] + `
+              ` + "Please follow up with " + per.toString() + " about the following notes: " +  note.toString() + 
+              `
+              ` + "Please do not respond to this email."; 
+              var subject = 'RE: Incoming Call, Please Follow Up';
+              MailApp.sendEmail(emailAddress, subject, body);
+            }
+          else if (row == "") {
+            var emailAddress = "zknight@managedservicesit.com";
+            var per = caller[i];
+    	      var note = notes[i];
+            var body = "Hello " + employee[i] + `
+            ` + "Please follow up with " + per.toString() + " about the following notes: " +  note.toString() + 
+            `
+            ` + "Please do not respond to this email."; 
+            var subject = 'RE: Incoming Call, Please Follow Up';
+            MailApp.sendEmail(emailAddress, subject, body);
+            }
+          }
+        }
+        ss.getRange('H2:H'+ lr).setValue(true)
+        }
+    }
+  }
