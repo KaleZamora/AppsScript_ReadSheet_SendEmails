@@ -32,7 +32,7 @@ function sendEmails() {
               MailApp.sendEmail(emailAddress, subject, body);
             }
           else if (row == "") {
-            var emailAddress = "zknight@managedservicesit.com";
+            var emailAddress = "Put Default Email Here";
             var per = caller[i];
     	      var note = notes[i];
             var body = "Hello " + employee[i] + `
